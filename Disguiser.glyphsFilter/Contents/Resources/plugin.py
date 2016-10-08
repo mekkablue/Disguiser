@@ -35,11 +35,11 @@ class Disguiser(FilterWithoutDialog):
 		self.menuName = "Disguiser"
 		self.keyboardShortcut = None # With Cmd+Shift
 
-	def filter(self, layer, inEditView, customParameters):
+	def filter(self, Layer, inEditView, customParameters):
 		rectangle = None
 		selection = Layer.selection
 			
-		if selectionCounts and selection:
+		if inEditView and selection:
 			pointsInSelection = selection.values()
 			xMin = min( pointsInSelection, key=lambda point: point.x )
 			xMax = max( pointsInSelection, key=lambda point: point.x )
