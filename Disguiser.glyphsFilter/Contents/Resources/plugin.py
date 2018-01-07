@@ -11,6 +11,7 @@
 #
 ###########################################################################################################
 
+import objc
 from GlyphsApp import *
 from GlyphsApp.plugins import *
 
@@ -25,7 +26,7 @@ class Disguiser(FilterWithoutDialog):
 		p4 = NSPoint( Rectangle.origin.x, Rectangle.origin.y + Rectangle.size.height )
 		for pos in (p1,p2,p3,p4):
 			P = GSNode()
-			P.type = 1
+			P.type = GSLINE
 			P.position = pos
 			rectPath.nodes.append( P )
 		rectPath.closed = True
