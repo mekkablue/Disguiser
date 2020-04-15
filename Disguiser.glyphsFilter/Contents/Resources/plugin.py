@@ -1,4 +1,5 @@
 # encoding: utf-8
+from __future__ import division, print_function, unicode_literals
 
 ###########################################################################################################
 #
@@ -17,6 +18,7 @@ from GlyphsApp.plugins import *
 
 class Disguiser(FilterWithoutDialog):
 	
+	@objc.python_method
 	def rectToPath( self, Rectangle ):
 		"""Turns an NSRect into a GSPath."""
 		rectPath = GSPath()
@@ -32,10 +34,12 @@ class Disguiser(FilterWithoutDialog):
 		rectPath.closed = True
 		return rectPath
 	
+	@objc.python_method
 	def settings(self):
 		self.menuName = "Disguiser"
 		self.keyboardShortcut = None # With Cmd+Shift
-
+	
+	@objc.python_method
 	def filter(self, Layer, inEditView, customParameters):
 		rectangle = None
 		selection = Layer.selection
@@ -56,8 +60,14 @@ class Disguiser(FilterWithoutDialog):
 			if Layer.paths:
 				rectangle = Layer.bounds
 				myPath = self.rectToPath( rectangle )
-				Layer.setPaths_( [myPath] )
+				try:
+					# GLYPHS 3
+					Layer.setShapes_( [myPath] )
+				except:
+					# GLYPHS 2
+					Layer.setPaths_( [myPath] )
 	
+	@objc.python_method
 	def __file__(self):
 		"""Please leave this method unchanged"""
 		return __file__
