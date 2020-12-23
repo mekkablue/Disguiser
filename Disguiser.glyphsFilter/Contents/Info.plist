@@ -12,16 +12,10 @@
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>Disguiser</string>
-	<key>CFBundleVersion</key>
-	<string>7</string>
 	<key>CFBundleShortVersionString</key>
-	<string>2.0.1</string>
-	<key>UpdateFeedURL</key>
-	<string>https://raw.githubusercontent.com/mekkablue/Disguiser/master/Disguiser.glyphsFilter/Contents/Info.plist</string>
-	<key>productPageURL</key>
-	<string>https://github.com/mekkablue/Disguiser</string>
-	<key>productReleaseNotes</key>
-	<string>Updated plugin binary.</string>
+	<string>2.0.2</string>
+	<key>CFBundleVersion</key>
+	<string>8</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Copyright, Rainer Erich Scheichelbauer, 2015-16</string>
 	<key>NSMainNibFile</key>
@@ -32,5 +26,11 @@
 	<array>
 		<string>plugin.py</string>
 	</array>
+	<key>UpdateFeedURL</key>
+	<string>https://raw.githubusercontent.com/mekkablue/Disguiser/master/Disguiser.glyphsFilter/Contents/Info.plist</string>
+	<key>productPageURL</key>
+	<string>https://github.com/mekkablue/Disguiser</string>
+	<key>productReleaseNotes</key>
+	<string>update binary files for Glyphs3</string>
 </dict>
 </plist>
