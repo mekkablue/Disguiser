@@ -30,32 +30,36 @@ class Disguiser(FilterWithoutDialog):
 		self.keyboardShortcut = None  # With Cmd+Shift
 
 	@objc.python_method
-	def filter(self, Layer, inEditView, customParameters):
-		rectangle = None
-		selection = Layer.selection
-			
-		if inEditView and selection:
-			pointsInSelection = selection.values()
-			xMin = min(pointsInSelection, key=lambda point: point.x)
-			xMax = max(pointsInSelection, key=lambda point: point.x)
-			yMin = min(pointsInSelection, key=lambda point: point.y)
-			yMax = max(pointsInSelection, key=lambda point: point.y)
-			rectangle = NSRect()
-			rectangle.origin = NSPoint(xMin.x, yMin.y)
-			rectangle.size = NSSize(xMax.x-xMin.x, yMax.y-yMin.y)
-			myPath = self.rectToPath(rectangle)
-			Layer.addPath_(myPath)
-		
-		if not rectangle:
-			if Layer.paths:
-				rectangle = Layer.bounds
-				myPath = self.rectToPath(rectangle)
-				try:
-					# GLYPHS 3
-					Layer.setShapes_([myPath])
-				except:
-					# GLYPHS 2
-					Layer.setPaths_([myPath])
+	def filter(self, layer, inEditView, customParameters):
+		print("__filter.controller", self.controller())
+		# if inEditView: is not set correctly, will be fixed soon.
+		if self.controller().className() == "GSEditViewController":
+			print("__inEditView")
+			selection = layer.selection
+			if selection:
+				rectangle = layer.boundsOfSelection()
+			else:
+				rectangle = layer.bounds
+			path = self.rectToPath(rectangle)
+			try:
+				# GLYPHS 3
+				layer.shapes.append(path)
+			except:
+				# GLYPHS 2
+				layer.paths.append(path)
+		else:
+			print("__inFontView")
+			for currLayer in layer.parent.layers:
+				if currLayer.paths:
+					rectangle = currLayer.bounds
+					path = self.rectToPath(rectangle)
+					try:
+						# GLYPHS 3
+						currLayer.shapes = [path]
+					except:
+						# GLYPHS 2
+						currLayer.paths = [path]
+					currLayer.hints = None
 
 	@objc.python_method
 	def __file__(self):
